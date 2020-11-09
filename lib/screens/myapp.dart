@@ -9,24 +9,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-
-        primarySwatch: Colors.green
-      ),
+      theme: ThemeData(primarySwatch: Colors.green),
       routes: {
-        '/login': (context) => MyHomePage(title: "titulo"),
-        '/registro': (context) => Registro(),
+        '/login': (context) => MyHomePage(title: "Login"),
+        '/registro': (context) => Registro(title: "Registro"),
         '/home': (context) => Registro(),
         '/pedidos': (context) => Registro(),
         '/perfil': (context) => Registro(),
-
       },
-
       initialRoute: '/login',
-
-    
-
     );
   }
 }
-
