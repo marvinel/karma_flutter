@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:karma/classes/favor.dart';
 import 'package:karma/widgets/constants.dart';
@@ -25,7 +27,15 @@ class Fpedido extends StatelessWidget {
                 _buildOptions(),
                 _buildList(),
               ],
-            )
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  child: _buildPedir(),
+                )
+              ],
+            ),
           ],
         ),
         drawer: Drawer(
@@ -39,25 +49,31 @@ class Fpedido extends StatelessWidget {
               ListTile(
                 title: Text('Pedir Favor'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("/Fpedidos");
                 },
               ),
               ListTile(
                 title: Text('Lista Favores'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("/Flista");
                 },
               ),
               ListTile(
                 title: Text('Favores Seleccionados'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("/Fseleccionados");
                 },
               ),
               ListTile(
                 title: Text('Perfil'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("/perfil");
+                },
+              ),
+              ListTile(
+                title: Text('Log out'),
+                onTap: () {
+                  Navigator.of(context).pushNamed("/login");
                 },
               )
             ],
@@ -66,6 +82,20 @@ class Fpedido extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildPedir() {
+  return Container(
+    alignment: Alignment.center,
+    child: RaisedButton(
+      child: Text(
+        "Pedir favor",
+        style: TextStyle(color: Colors.white),
+      ),
+      color: Colors.green,
+      onPressed: () {},
+    ),
+  );
 }
 
 Widget _buildOptions() {
@@ -85,53 +115,50 @@ Widget _buildOptions() {
 Widget _buildFavorInfo(Favor) {
   return Container(
     width: 370,
-    height: 240,
+    height: 230,
     child: Card(
       color: Colors.deepPurple[900],
-      child: Container(
-        child: Column(
-          children: [
-            SizedBox(height: 10),
-            Text(
-              Favor.name,
-              style: TextStyle(color: Colors.white, fontSize: 22),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.status,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.personAsking,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.details,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.deliveryPoint,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Container(
-              alignment: Alignment.center,
-              child: Expanded(
-                child: RaisedButton(
-                  child: Text(
-                    "Chat",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  color: Colors.green,
-                  onPressed: () {},
-                ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 15),
+          Text(
+            Favor.name,
+            style: TextStyle(color: Colors.white, fontSize: 22),
+          ),
+          SizedBox(height: 10),
+          Text(
+            Favor.status,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Text(
+            Favor.personAsking,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Text(
+            Favor.details,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Text(
+            Favor.deliveryPoint,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Container(
+            width: 330,
+            child: RaisedButton(
+              child: Text(
+                "Chat",
+                style: TextStyle(color: Colors.white),
               ),
+              color: Colors.green,
+              onPressed: () {},
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     ),
   );

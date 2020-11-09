@@ -7,7 +7,6 @@ class FLista extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int id = 1;
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Bienvenidos a los pedidos',
@@ -40,25 +39,31 @@ class FLista extends StatelessWidget {
               ListTile(
                 title: Text('Pedir Favor'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("/Fpedidos");
                 },
               ),
               ListTile(
                 title: Text('Lista Favores'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("/Flista");
                 },
               ),
               ListTile(
                 title: Text('Favores Seleccionados'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("/Fseleccionados");
                 },
               ),
               ListTile(
                 title: Text('Perfil'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("/perfil");
+                },
+              ),
+              ListTile(
+                title: Text('Log out'),
+                onTap: () {
+                  Navigator.of(context).pushNamed("/login");
                 },
               )
             ],
@@ -133,13 +138,13 @@ Widget _buildRadioButtons() {
 Widget _buildFavorInfo(Favor) {
   return Container(
     width: 370,
-    height: 240,
+    height: 230,
     child: Card(
       color: Colors.deepPurple[900],
       child: Container(
         child: Column(
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             Text(
               Favor.name,
               style: TextStyle(color: Colors.white, fontSize: 22),
@@ -166,7 +171,7 @@ Widget _buildFavorInfo(Favor) {
             ),
             SizedBox(height: 10),
             Container(
-              alignment: Alignment.center,
+              width: 330,
               child: RaisedButton(
                 child: Text(
                   "Hacer Favor",

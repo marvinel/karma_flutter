@@ -6,8 +6,6 @@ import 'constants.dart';
 class Fseleccionados extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int id = 1;
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Bienvenidos a los pedidos',
@@ -39,27 +37,33 @@ class Fseleccionados extends StatelessWidget {
               ListTile(
                 title: Text('Pedir Favor'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("/Fpedidos");
                 },
               ),
               ListTile(
                 title: Text('Lista Favores'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("/Flista");
                 },
               ),
               ListTile(
                 title: Text('Favores Seleccionados'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("/Fseleccionados");
                 },
               ),
               ListTile(
                 title: Text('Perfil'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed("/perfil");
                 },
-              )
+              ),
+              ListTile(
+                title: Text('Log out'),
+                onTap: () {
+                  Navigator.of(context).pushNamed("/login");
+                },
+              ),
             ],
           ),
         ),
@@ -85,13 +89,13 @@ Widget _buildOptions() {
 Widget _buildFavorInfo(Favor) {
   return Container(
     width: 370,
-    height: 280,
+    height: 275,
     child: Card(
       color: Colors.deepPurple[900],
       child: Container(
         child: Column(
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             Text(
               Favor.name,
               style: TextStyle(color: Colors.white, fontSize: 22),
@@ -118,29 +122,25 @@ Widget _buildFavorInfo(Favor) {
             ),
             SizedBox(height: 10),
             Container(
-              alignment: Alignment.center,
-              child: Expanded(
-                child: RaisedButton(
-                  child: Text(
-                    "Chat",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  color: Colors.green,
-                  onPressed: () {},
+              width: 330,
+              child: RaisedButton(
+                child: Text(
+                  "Chat",
+                  style: TextStyle(color: Colors.white),
                 ),
+                color: Colors.green,
+                onPressed: () {},
               ),
             ),
             Container(
-              alignment: Alignment.center,
-              child: Expanded(
-                child: RaisedButton(
-                  child: Text(
-                    "Terminar",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  color: Colors.green,
-                  onPressed: () {},
+              width: 330,
+              child: RaisedButton(
+                child: Text(
+                  "Terminar",
+                  style: TextStyle(color: Colors.white),
                 ),
+                color: Colors.green,
+                onPressed: () {},
               ),
             ),
           ],
@@ -154,10 +154,10 @@ Widget _buildList() {
   List<Favor> favores = [
     Favor(
         name: 'Bill Will',
-        personAsking: 'djnhdkidk',
+        personAsking: 'Marvin Henriquez',
         details: "Software Developer",
-        deliveryPoint: "jdkddkl",
-        status: "dhsksn"),
+        deliveryPoint: "la casa",
+        status: "inicial"),
     Favor(
         name: 'Jhoner Pineda',
         personAsking: 'Marvin',
