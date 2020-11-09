@@ -16,16 +16,14 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _logged = false;
   String email, password;
   Widget _buildLogo() {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 40),
-          child: Text("Karma",
-              style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.height / 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white)),
+        Container(
+          height: 200,
+          decoration: BoxDecoration(
+              image:
+                  DecorationImage(image: AssetImage('assets/karmalogo2.png'))),
         )
       ],
     );
@@ -121,7 +119,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       offset: Offset(0, 2),
                       blurRadius: 6.0)
                 ]),
-
             child: Icon(
               FontAwesomeIcons.instagram,
               color: Colors.white,
@@ -143,7 +140,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       offset: Offset(0, 2),
                       blurRadius: 6.0)
                 ]),
-                
             child: Icon(
               FontAwesomeIcons.facebook,
               color: Colors.white,
@@ -151,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         Spacer(flex: 1),
-                GestureDetector(
+        GestureDetector(
           onTap: () {},
           child: Container(
             height: 50,
@@ -165,14 +161,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       offset: Offset(0, 2),
                       blurRadius: 6.0)
                 ]),
-                
             child: Icon(
               FontAwesomeIcons.twitter,
               color: Colors.white,
             ),
           ),
         ),
-
         Spacer(flex: 2),
       ],
     );
@@ -213,11 +207,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildContainer() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(20)),
           child: Container(
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height * 0.5,
               width: MediaQuery.of(context).size.width * 0.8,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -239,7 +234,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   _buildPassword(),
                   _loginButton(),
                   _socialbtn()
-
                 ],
               )),
         )
@@ -259,6 +253,17 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Stack(children: <Widget>[
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: 200,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/karmalogo2.png'))),
+            )
+          ],
+        ),
         Container(
           height: MediaQuery.of(context).size.height * 0.7,
           width: MediaQuery.of(context).size.width,
@@ -273,36 +278,8 @@ class _MyHomePageState extends State<MyHomePage> {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[_buildLogo(), _buildContainer(), _buildSignup()],
-        )
-      ]
-
-          /*Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/karmalogo2.png'))),
-            ),
-            RaisedButton(
-                child: Text("Iniciar sesion"),
-                onPressed: () {
-                  _status();
-                  Navigator.of(context).pushNamed("/home");
-                }),
-            RaisedButton(
-                child: Text("Resgistro"),
-                onPressed: () {
-                  Navigator.of(context).pushNamed("/registro");
-                }),
-            Text(
-              '$_logged',
-              style: Theme.of(context).textTheme.display1,
-            )
-          ],
-        ),*/
-          ),
+        ),
+      ]),
       // This trailing comma makes auto-formatting nicer for build methods.
     ));
   }
