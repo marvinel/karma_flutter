@@ -125,7 +125,7 @@ class _MyRegistroPageState extends State<Registro> {
               ),
               onPressed: () {
                 _status();
-                Navigator.of(context).pushNamed("/login");
+                Navigator.of(context).pop();
               },
               child: Text(
                 "Registro",
