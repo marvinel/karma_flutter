@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:karma/classes/favor.dart';
 import 'package:karma/widgets/constants.dart';
 
+import '../main.dart';
+import 'constants.dart';
+import 'constants.dart';
 import 'constants.dart';
 
 class FLista extends StatelessWidget {
@@ -13,10 +16,12 @@ class FLista extends StatelessWidget {
       title: 'Bienvenidos a los pedidos',
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: mainColor,
           title: Text('Pedidos'),
         ),
         body: Stack(
           children: <Widget>[
+            Container(decoration: BoxDecoration()),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
