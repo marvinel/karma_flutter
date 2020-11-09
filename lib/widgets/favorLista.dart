@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:karma/classes/favor.dart';
 import 'package:karma/widgets/constants.dart';
-
-import '../main.dart';
-import 'constants.dart';
-import 'constants.dart';
 import 'constants.dart';
 
 class FLista extends StatelessWidget {
@@ -13,6 +9,7 @@ class FLista extends StatelessWidget {
     int id = 1;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Bienvenidos a los pedidos',
       home: Scaffold(
         appBar: AppBar(
@@ -37,7 +34,7 @@ class FLista extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
-                child: Text("Nombre de Usuario"),
+                child: Text("Kebin Ramirez"),
                 decoration: BoxDecoration(color: mainColor),
               ),
               ListTile(
@@ -57,6 +54,12 @@ class FLista extends StatelessWidget {
                 onTap: () {
                   Navigator.pop(context);
                 },
+              ),
+              ListTile(
+                title: Text('Perfil'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
               )
             ],
           ),
@@ -64,32 +67,6 @@ class FLista extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget _buildContainer() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: <Widget>[
-      ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[Text("Registro", style: TextStyle())],
-                ),
-                _buildRadioButtons()
-              ],
-            )),
-      )
-    ],
-  );
 }
 
 Widget _buildOptions() {
@@ -125,19 +102,37 @@ Widget _buildRadioButtons() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: <Widget>[
-      Radio(value: 1, groupValue: id, onChanged: null),
-      Text("Sacar Copias"),
-      Radio(value: 1, groupValue: id, onChanged: null),
-      Text("Comprar Km5"),
-      Radio(value: 1, groupValue: id, onChanged: null),
-      Text("Domicilio P7")
+      Expanded(
+        flex: 1,
+        child: Radio(value: 1, groupValue: id, onChanged: null),
+      ),
+      Expanded(
+        flex: 2,
+        child: Text("Sacar Copias"),
+      ),
+      Expanded(
+        flex: 1,
+        child: Radio(value: 1, groupValue: id, onChanged: null),
+      ),
+      Expanded(
+        flex: 2,
+        child: Text("Comprar Km5"),
+      ),
+      Expanded(
+        flex: 1,
+        child: Radio(value: 1, groupValue: id, onChanged: null),
+      ),
+      Expanded(
+        flex: 2,
+        child: Text("Domicilio P7"),
+      ),
     ],
   );
 }
 
 Widget _buildFavorInfo(Favor) {
   return Container(
-    width: 240,
+    width: 370,
     height: 240,
     child: Card(
       color: Colors.deepPurple[900],
