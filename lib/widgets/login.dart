@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onPressed: () {
                 _status();
-                Navigator.of(context).pushNamed("/perfil");
+                Navigator.of(context).pushNamed("/Fseleccionados");
               },
               child: Text(
                 "Login",
