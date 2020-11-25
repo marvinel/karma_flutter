@@ -1,12 +1,15 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:karma/classes/favor.dart';
-import 'package:karma/widgets/constants.dart';
+import 'package:karma/pages/constants.dart';
 import 'constants.dart';
 
-class FLista extends StatelessWidget {
+class Fpedido extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int id = 1;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Bienvenidos a los pedidos',
@@ -22,10 +25,17 @@ class FLista extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 _buildOptions(),
-                _buildRadioButtons(),
                 _buildList(),
               ],
-            )
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  child: _buildPedir(),
+                )
+              ],
+            ),
           ],
         ),
         drawer: Drawer(
@@ -74,62 +84,29 @@ class FLista extends StatelessWidget {
   }
 }
 
+Widget _buildPedir() {
+  return Container(
+    alignment: Alignment.center,
+    child: RaisedButton(
+      child: Text(
+        "Pedir favor",
+        style: TextStyle(color: Colors.white),
+      ),
+      color: Colors.green,
+      onPressed: () {},
+    ),
+  );
+}
+
 Widget _buildOptions() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: <Widget>[
       Container(
         child: Text(
-          "Favores:",
+          "Favor solicitado:",
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
-      ),
-      Container(
-        child: RaisedButton(
-          color: Colors.green,
-          onPressed: () {},
-          child: Text("FILTRAR"),
-        ),
-      ),
-      Container(
-        child: RaisedButton(
-          color: Colors.green,
-          onPressed: () {},
-          child: Text("LIMPIAR"),
-        ),
-      ),
-    ],
-  );
-}
-
-Widget _buildRadioButtons() {
-  int id = 1;
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: <Widget>[
-      Expanded(
-        flex: 1,
-        child: Radio(value: 1, groupValue: id, onChanged: null),
-      ),
-      Expanded(
-        flex: 2,
-        child: Text("Sacar Copias"),
-      ),
-      Expanded(
-        flex: 1,
-        child: Radio(value: 1, groupValue: id, onChanged: null),
-      ),
-      Expanded(
-        flex: 2,
-        child: Text("Comprar Km5"),
-      ),
-      Expanded(
-        flex: 1,
-        child: Radio(value: 1, groupValue: id, onChanged: null),
-      ),
-      Expanded(
-        flex: 2,
-        child: Text("Domicilio P7"),
       ),
     ],
   );
@@ -141,48 +118,47 @@ Widget _buildFavorInfo(Favor) {
     height: 230,
     child: Card(
       color: Colors.deepPurple[900],
-      child: Container(
-        child: Column(
-          children: [
-            SizedBox(height: 15),
-            Text(
-              Favor.name,
-              style: TextStyle(color: Colors.white, fontSize: 22),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.status,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.personAsking,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.details,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.deliveryPoint,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Container(
-              width: 330,
-              child: RaisedButton(
-                child: Text(
-                  "Hacer Favor",
-                  style: TextStyle(color: Colors.white),
-                ),
-                color: Colors.green,
-                onPressed: () {},
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 15),
+          Text(
+            Favor.name,
+            style: TextStyle(color: Colors.white, fontSize: 22),
+          ),
+          SizedBox(height: 10),
+          Text(
+            Favor.status,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Text(
+            Favor.personAsking,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Text(
+            Favor.details,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Text(
+            Favor.deliveryPoint,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Container(
+            width: 330,
+            child: RaisedButton(
+              child: Text(
+                "Chat",
+                style: TextStyle(color: Colors.white),
               ),
-            )
-          ],
-        ),
+              color: Colors.green,
+              onPressed: () {},
+            ),
+          ),
+        ],
       ),
     ),
   );

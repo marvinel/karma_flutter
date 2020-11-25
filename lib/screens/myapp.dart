@@ -1,12 +1,12 @@
-import 'package:karma/widgets/favorLista.dart';
-import 'package:karma/widgets/favorPedido.dart';
-import 'package:karma/widgets/favoresSeleccionados.dart';
-import 'package:karma/widgets/login.dart';
-import 'package:karma/widgets/perfil.dart';
-import 'package:karma/widgets/registro.dart';
+import 'package:karma/pages/favorLista.dart';
+import 'package:karma/pages/favorPedido.dart';
+import 'package:karma/pages/favoresSeleccionados.dart';
+import 'package:karma/pages/login.dart';
+import 'package:karma/pages/perfil.dart';
+import 'package:karma/pages/registro.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/registro.dart';
+import '../pages/registro.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
