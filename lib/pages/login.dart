@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:karma/widgets/constants.dart';
+import 'package:karma/pages/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
