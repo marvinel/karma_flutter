@@ -11,7 +11,7 @@ Future<String> signInWithFirebase(email, password) async {
   var fbuser;
   try {
     fbuser = (await _auth.signInWithEmailAndPassword(
-        email: email, password: password));
+        email: email.trim(), password: password));
     final FirebaseUser user = await _auth.currentUser();
     final uid = user.uid;
     print("OK " + uid);

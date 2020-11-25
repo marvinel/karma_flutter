@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:karma/pages/constants.dart';
+import 'package:karma/backend/firebase_auth.dart';
 
 class Registro extends StatefulWidget {
   Registro({Key key, this.title}) : super(key: key);
@@ -125,7 +126,10 @@ class _MyRegistroPageState extends State<Registro> {
               ),
               onPressed: () {
                 _status();
-                Navigator.of(context).pop();
+                Future<String> res = "OK";
+                if (signUpWithFirebase(email, password, name) == res.value()) {
+                  Navigator.of(context).pushNamed("/login");
+                }
               },
               child: Text(
                 "Registro",
