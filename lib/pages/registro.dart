@@ -126,8 +126,7 @@ class _MyRegistroPageState extends State<Registro> {
               ),
               onPressed: () {
                 _status();
-                Future<String> res = "OK";
-                if (signUpWithFirebase(email, password, name) == res.value()) {
+                if (signUpWithFirebase(email, password, name) == "OK") {
                   Navigator.of(context).pushNamed("/login");
                 }
               },

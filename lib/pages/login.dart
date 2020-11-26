@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:karma/pages/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:karma/backend/firebase_auth.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -86,6 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onPressed: () {
                 _status();
+                signInWithFirebase(email, password);
                 Navigator.of(context).pushNamed("/Fpedidos");
               },
               child: Text(
