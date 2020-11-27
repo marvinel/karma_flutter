@@ -87,8 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onPressed: () {
                 _status();
-                signInWithFirebase(email, password);
-                Navigator.of(context).pushNamed("/Fpedidos");
+                Future<String> f = signInWithFirebase(email, password);
+                f.then((val) {
+                  if (val == "OK") {
+                    Navigator.of(context).pushNamed("/Fpedidos");
+                  }
+                });
               },
               child: Text(
                 "Login",
