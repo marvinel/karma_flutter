@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'constants.dart';
+import 'package:karma/backend/firebase_auth.dart';
 
 class Perfil extends StatefulWidget {
   @override
@@ -140,7 +141,7 @@ class MapScreenState extends State<Perfil> {
                                   child: Padding(
                                     padding: EdgeInsets.only(right: 10.0),
                                     child: new Text(
-                                      'Kebin Ramirez',
+                                      currentSignedInUser.name,
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.normal),
@@ -187,7 +188,7 @@ class MapScreenState extends State<Perfil> {
                               children: <Widget>[
                                 new Flexible(
                                   child: new Text(
-                                    'kebinr@uninorte.edu.co',
+                                    currentSignedInUser.email,
                                     style: TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.normal),
@@ -230,7 +231,7 @@ class MapScreenState extends State<Perfil> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text("Kebin Ramirez"),
+              child: Text(currentSignedInUser.name),
               decoration: BoxDecoration(color: mainColor),
             ),
             ListTile(

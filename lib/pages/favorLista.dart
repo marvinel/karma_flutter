@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:karma/classes/favor.dart';
 import 'package:karma/pages/constants.dart';
 import 'constants.dart';
+import 'package:karma/backend/firebase_auth.dart';
 
 class FLista extends StatelessWidget {
   @override
@@ -33,7 +34,7 @@ class FLista extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
-                child: Text("Kebin Ramirez"),
+                child: Text(currentSignedInUser.name),
                 decoration: BoxDecoration(color: mainColor),
               ),
               ListTile(

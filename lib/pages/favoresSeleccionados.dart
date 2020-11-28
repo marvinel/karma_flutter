@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:karma/classes/favor.dart';
 import 'package:karma/pages/constants.dart';
 import 'constants.dart';
+import 'package:karma/backend/firebase_auth.dart';
 
 class Fseleccionados extends StatelessWidget {
   @override
@@ -31,7 +32,7 @@ class Fseleccionados extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
-                child: Text("Kebin Ramirez"),
+                child: Text(currentSignedInUser.name),
                 decoration: BoxDecoration(color: mainColor),
               ),
               ListTile(
