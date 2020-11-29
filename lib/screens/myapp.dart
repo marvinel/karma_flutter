@@ -4,6 +4,7 @@ import 'package:karma/pages/favoresSeleccionados.dart';
 import 'package:karma/pages/login.dart';
 import 'package:karma/pages/perfil.dart';
 import 'package:karma/pages/registro.dart';
+import 'package:karma/pages/favorForm.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/registro.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         '/Flista': (context) => FLista(),
         '/perfil': (context) => Perfil(),
         '/Fseleccionados': (context) => Fseleccionados(),
+        '/Ffavor': (context) => Ffavor(),
       },
       initialRoute: '/login',
     );
