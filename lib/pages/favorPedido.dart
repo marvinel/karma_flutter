@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:karma/classes/favor.dart';
 import 'package:karma/pages/constants.dart';
 import 'package:karma/backend/firebase_auth.dart';
-import 'package:get/get.dart';
+import 'package:karma/pages/agregarFavor.dart';
 
 import 'constants.dart';
 
@@ -27,15 +27,6 @@ class Fpedido extends StatelessWidget {
               children: <Widget>[
                 _buildOptions(),
                 _buildList(),
-                _buildPedir(),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  child: _buildPedir(),
-                )
               ],
             ),
           ],
@@ -81,25 +72,36 @@ class Fpedido extends StatelessWidget {
             ],
           ),
         ),
+        floatingActionButton: _pedirFavor()
+            ? FloatingActionButton.extended(
+                onPressed: () => _addFavorModalBottomSheet(context),
+                label: Text('Pedir Favor'),
+                backgroundColor: Colors.green,
+              )
+            : null,
       ),
     );
   }
+
+  bool _pedirFavor() {
+    //TODO Check current user score, if >= 2, return true, else, false
+    return true;
+  }
 }
 
-Widget _buildPedir() {
-  return Container(
-    alignment: Alignment.center,
-    child: RaisedButton(
-      child: Text(
-        "Pedir favor",
-        style: TextStyle(color: Colors.white),
+void _addFavorModalBottomSheet(context) {
+  showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
       ),
-      color: Colors.green,
-      onPressed: () {
-        Get.toNamed("/Ffavor");
-      },
-    ),
-  );
+      builder: (BuildContext bd) {
+        return AgregarFavor();
+      });
 }
 
 Widget _buildOptions() {

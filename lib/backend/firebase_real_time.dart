@@ -24,23 +24,24 @@ Future<String> sendChatMsg(String text) async {
   return Future.value("OK");
 }
 
-Future<String> addFavor(status, name, details, deliveryPoint) async {
+Future<String> addFavor(user_asking, user_toDo, user_askingid, user_toDoid,
+    type, details, status, delivery) async {
   try {} catch (error) {
     print('ERRORS');
     print(error.message.toString());
     print(error.code.toString());
     throw Exception(error.message.toString());
   }
-  final FirebaseUser user = await _auth.currentUser();
-  final uid = user.uid;
-  print(' User Info ' + uid);
 
-  databaseReference.child("favores").child(user.uid).set({
-    'name': name,
-    'personAsking': user.uid,
+  databaseReference.child("favores").push().set({
+    'user_asking': user_asking,
+    'user_toDo': user_toDo,
+    'user_askingid': user_askingid,
+    'user_toDoid': user_toDoid,
+    'type': type,
     'details': details,
     'status': status,
-    'deliveryPoint': deliveryPoint
+    'delivery': delivery,
   });
 
   return Future.value("OK");
