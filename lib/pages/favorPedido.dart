@@ -5,14 +5,6 @@ import 'package:karma/backend/firebase_auth.dart';
 import 'package:karma/pages/agregarFavor.dart';
 
 import '../backend/firebase_real_time.dart';
-import '../backend/firebase_real_time.dart';
-import '../backend/firebase_real_time.dart';
-import '../backend/firebase_real_time.dart';
-import '../backend/firebase_real_time.dart';
-import '../backend/firebase_real_time.dart';
-import '../backend/firebase_real_time.dart';
-import '../backend/firebase_real_time.dart';
-import '../classes/favor.dart';
 import '../classes/favor.dart';
 import 'constants.dart';
 
@@ -128,7 +120,7 @@ Widget _buildOptions() {
 }
 
 // ignore: unused_element
-Widget _buildFavorInfo(Favor) {
+Widget _buildFavorInfo(Favor f) {
   return Container(
     width: 370,
     height: 230,
@@ -139,27 +131,27 @@ Widget _buildFavorInfo(Favor) {
         children: [
           SizedBox(height: 15),
           Text(
-            Favor.type,
+            f.type,
             style: TextStyle(color: Colors.white, fontSize: 22),
           ),
           SizedBox(height: 10),
           Text(
-            Favor.status,
+            f.status,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Text(
-            Favor.user_asking,
+            f.user_asking,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Text(
-            Favor.details,
+            f.details,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Text(
-            Favor.delivery,
+            f.delivery,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
@@ -207,6 +199,9 @@ Widget _buildList() {
               }).toList(),
             ),
           ));
-    }
+    } else {}
   });
+  return new Container(
+    child: new Text('no se ha pedido ningun favor'),
+  );
 }
