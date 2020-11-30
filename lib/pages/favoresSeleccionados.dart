@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:karma/classes/favor.dart';
 import 'package:karma/pages/constants.dart';
 import 'constants.dart';
 import 'package:karma/backend/firebase_auth.dart';
@@ -87,6 +86,7 @@ Widget _buildOptions() {
   );
 }
 
+// ignore: non_constant_identifier_names
 Widget _buildFavorInfo(Favor) {
   return Container(
     width: 370,
@@ -152,23 +152,23 @@ Widget _buildFavorInfo(Favor) {
 }
 
 Widget _buildList() {
-  List<Favor> favores = [
-    Favor(
-        name: 'Bill Will',
-        personAsking: 'Marvin Henriquez',
-        details: "Software Developer",
-        deliveryPoint: "la casa",
-        status: "inicial"),
-    Favor(
-        name: 'Jhoner Pineda',
-        personAsking: 'Marvin',
-        details: "Software Developer",
-        deliveryPoint: "p7",
-        status: "1")
-  ];
-  return Column(
-    children: favores.map((f) {
-      return _buildFavorInfo(f);
-    }).toList(),
-  );
+  // List<Favor> favores = [
+  //   Favor(
+  //       name: 'Bill Will',
+  //       personAsking: 'Marvin Henriquez',
+  //       details: "Software Developer",
+  //       deliveryPoint: "la casa",
+  //       status: "inicial"),
+  //   Favor(
+  //       name: 'Jhoner Pineda',
+  //       personAsking: 'Marvin',
+  //       details: "Software Developer",
+  //       deliveryPoint: "p7",
+  //       status: "1")
+  // ];
+  // return Column(
+  //   children: favores.map((f) {
+  //     return _buildFavorInfo(f);
+  //   }).toList(),
+  // );
 }

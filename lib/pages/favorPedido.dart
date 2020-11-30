@@ -4,13 +4,21 @@ import 'package:karma/pages/constants.dart';
 import 'package:karma/backend/firebase_auth.dart';
 import 'package:karma/pages/agregarFavor.dart';
 
+import '../backend/firebase_real_time.dart';
+import '../backend/firebase_real_time.dart';
+import '../backend/firebase_real_time.dart';
+import '../backend/firebase_real_time.dart';
+import '../backend/firebase_real_time.dart';
+import '../backend/firebase_real_time.dart';
+import '../backend/firebase_real_time.dart';
+import '../backend/firebase_real_time.dart';
+import '../classes/favor.dart';
+import '../classes/favor.dart';
 import 'constants.dart';
 
 class Fpedido extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int id = 1;
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Bienvenidos a los pedidos',
@@ -84,6 +92,7 @@ class Fpedido extends StatelessWidget {
   }
 
   bool _pedirFavor() {
+    // ignore: todo
     //TODO Check current user score, if >= 2, return true, else, false
     return true;
   }
@@ -118,6 +127,7 @@ Widget _buildOptions() {
   );
 }
 
+// ignore: unused_element
 Widget _buildFavorInfo(Favor) {
   return Container(
     width: 370,
@@ -129,7 +139,7 @@ Widget _buildFavorInfo(Favor) {
         children: [
           SizedBox(height: 15),
           Text(
-            Favor.name,
+            Favor.type,
             style: TextStyle(color: Colors.white, fontSize: 22),
           ),
           SizedBox(height: 10),
@@ -139,7 +149,7 @@ Widget _buildFavorInfo(Favor) {
           ),
           SizedBox(height: 10),
           Text(
-            Favor.personAsking,
+            Favor.user_asking,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
@@ -149,7 +159,7 @@ Widget _buildFavorInfo(Favor) {
           ),
           SizedBox(height: 10),
           Text(
-            Favor.deliveryPoint,
+            Favor.delivery,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
@@ -170,24 +180,33 @@ Widget _buildFavorInfo(Favor) {
   );
 }
 
+// ignore: missing_return
 Widget _buildList() {
-  List<Favor> favores = [
-    Favor(
-        name: 'Bill Will',
-        personAsking: 'djnhdkidk',
-        details: "Software Developer",
-        deliveryPoint: "jdkddkl",
-        status: "dhsksn"),
-    Favor(
-        name: 'Jhoner Pineda',
-        personAsking: 'Marvin',
-        details: "Software Developer",
-        deliveryPoint: "p7",
-        status: "1")
-  ];
-  return Column(
-    children: favores.map((f) {
-      return _buildFavorInfo(f);
-    }).toList(),
-  );
+  Future<String> fa = obtenerFavorPedido();
+  fa.then((val) {
+    if (val == "OK") {
+      List<Favor> favores = [
+        Favor(
+            user_asking: favoresP.user_asking,
+            user_toDo: favoresP.user_toDo,
+            user_askingid: favoresP.user_askingid,
+            user_toDoid: favoresP.user_toDoid,
+            type: favoresP.type,
+            details: favoresP.details,
+            status: favoresP.status,
+            delivery: favoresP.delivery),
+      ];
+      print(favores);
+      return new Container(
+          width: 370,
+          height: 550,
+          child: new SingleChildScrollView(
+            child: new Column(
+              children: favores.map((f) {
+                return _buildFavorInfo(f);
+              }).toList(),
+            ),
+          ));
+    }
+  });
 }

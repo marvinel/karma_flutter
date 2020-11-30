@@ -190,23 +190,23 @@ Widget _buildFavorInfo(Favor) {
 }
 
 Widget _buildList() {
-  List<Favor> favores = [
-    Favor(
-        name: 'Bill Will',
-        personAsking: 'djnhdkidk',
-        details: "Software Developer",
-        deliveryPoint: "jdkddkl",
-        status: "dhsksn"),
-    Favor(
-        name: 'Jhoner Pineda',
-        personAsking: 'Marvin',
-        details: "Software Developer",
-        deliveryPoint: "p7",
-        status: "1")
-  ];
-  return Column(
-    children: favores.map((f) {
-      return _buildFavorInfo(f);
-    }).toList(),
-  );
+  // List<Favor> favores = [
+  //   Favor(
+  //       name: 'Bill Will',
+  //       personAsking: 'djnhdkidk',
+  //       details: "Software Developer",
+  //       deliveryPoint: "jdkddkl",
+  //       status: "dhsksn"),
+  //   Favor(
+  //       name: 'Jhoner Pineda',
+  //       personAsking: 'Marvin',
+  //       details: "Software Developer",
+  //       deliveryPoint: "p7",
+  //       status: "1")
+  // ];
+  // return Column(
+  //   children: favores.map((f) {
+  //     return _buildFavorInfo(f);
+  //   }).toList(),
+  // );
 }

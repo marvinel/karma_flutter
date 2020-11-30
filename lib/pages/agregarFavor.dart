@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:karma/backend/firebase_real_time.dart';
 import 'package:karma/backend/firebase_auth.dart';
 import '../backend/firebase_auth.dart';
-import '../backend/firebase_auth.dart';
 import '../backend/firebase_real_time.dart';
 
 class AgregarFavor extends StatefulWidget {
