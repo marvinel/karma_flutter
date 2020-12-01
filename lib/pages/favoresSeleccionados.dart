@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:karma/pages/constants.dart';
 import 'constants.dart';
 import 'package:karma/backend/firebase_auth.dart';
+import 'package:karma/classes/favor.dart';
 
 class Fseleccionados extends StatelessWidget {
   @override
@@ -87,65 +88,53 @@ Widget _buildOptions() {
 }
 
 // ignore: non_constant_identifier_names
-Widget _buildFavorInfo(Favor) {
+Widget _buildFavorInfo(Favor f) {
   return Container(
     width: 370,
-    height: 275,
+    height: 230,
     child: Card(
       color: Colors.deepPurple[900],
-      child: Container(
-        child: Column(
-          children: [
-            SizedBox(height: 15),
-            Text(
-              Favor.name,
-              style: TextStyle(color: Colors.white, fontSize: 22),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.status,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.personAsking,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.details,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.deliveryPoint,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Container(
-              width: 330,
-              child: RaisedButton(
-                child: Text(
-                  "Chat",
-                  style: TextStyle(color: Colors.white),
-                ),
-                color: Colors.green,
-                onPressed: () {},
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 15),
+          Text(
+            f.type,
+            style: TextStyle(color: Colors.white, fontSize: 22),
+          ),
+          SizedBox(height: 10),
+          Text(
+            f.status,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Text(
+            f.user_asking,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Text(
+            f.details,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Text(
+            f.delivery,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Container(
+            width: 330,
+            child: RaisedButton(
+              child: Text(
+                "Chat",
+                style: TextStyle(color: Colors.white),
               ),
+              color: Colors.green,
+              onPressed: () {},
             ),
-            Container(
-              width: 330,
-              child: RaisedButton(
-                child: Text(
-                  "Terminar",
-                  style: TextStyle(color: Colors.white),
-                ),
-                color: Colors.green,
-                onPressed: () {},
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     ),
   );
