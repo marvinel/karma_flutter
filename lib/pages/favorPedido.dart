@@ -112,10 +112,10 @@ class Fpedido extends StatelessWidget {
   }
 
   bool _pedirFavor() {
-    if (currentSignedInUser.karma < 2) {
-      return false;
+    if (currentSignedInUser.karma >= 2 && currentSignedInUser.favor == 1) {
+      return true;
     }
-    return true;
+    return false;
   }
 }
 
@@ -205,6 +205,7 @@ Widget _buildFavorInfo(Favor f) {
 Widget _buildList() {
   List<Favor> favores = [
     Favor(
+        key: favoresP.key,
         user_asking: favoresP.user_asking,
         user_toDo: favoresP.user_toDo,
         user_askingid: favoresP.user_askingid,

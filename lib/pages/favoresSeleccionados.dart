@@ -18,7 +18,7 @@ class Fseleccionados extends StatelessWidget {
         ),
         body: FutureBuilder(
           future: listaSeleccionados(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
+          builder: (BuildContext contex, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               if (favoresS.isEmpty) {
                 return Stack(
@@ -44,7 +44,7 @@ class Fseleccionados extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         _buildOptions(),
-                        _buildList(),
+                        _buildList(context),
                       ],
                     ),
                   ],
@@ -117,10 +117,10 @@ Widget _buildOptions() {
   );
 }
 
-Widget _buildFavorInfo(Favor f) {
+Widget _buildFavorInfo(Favor f, BuildContext context) {
   return Container(
     width: 370,
-    height: 230,
+    height: 280,
     child: Card(
       color: Colors.deepPurple[900],
       child: Column(
@@ -154,47 +154,53 @@ Widget _buildFavorInfo(Favor f) {
           SizedBox(height: 10),
           Container(
             width: 330,
-            child: Stack(
-              children: <Widget>[
-                Container(decoration: BoxDecoration()),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    RaisedButton(
-                      child: Text(
-                        "Chat",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      color: Colors.green,
-                      onPressed: () {},
-                    ),
-                    RaisedButton(
-                      child: Text(
-                        "Terminar",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      color: Colors.green,
-                      onPressed: () {},
-                    )
-                  ],
-                ),
-              ],
+            child: RaisedButton(
+              child: Text(
+                "Chat",
+                style: TextStyle(color: Colors.white),
+              ),
+              color: Colors.green,
+              onPressed: () {},
             ),
           ),
+          Container(
+            width: 330,
+            child: RaisedButton(
+              child: Text(
+                "Terminar",
+                style: TextStyle(color: Colors.white),
+              ),
+              color: Colors.green,
+              onPressed: () {
+                Future<String> ff = updateFavor2(f);
+                ff.then((val) {
+                  if (val == "OK") {
+                    Future<String> pu =
+                        cambiarKarma2(f.user_askingid, f.user_toDoid);
+                    pu.then((value) {
+                      if (value == "OK") {
+                        Navigator.of(context).pushNamed("/Fseleccionados");
+                      }
+                    });
+                  }
+                });
+              },
+            ),
+          )
         ],
       ),
     ),
   );
 }
 
-Widget _buildList() {
+Widget _buildList(BuildContext context) {
   return new Container(
       width: 370,
       height: 550,
       child: new SingleChildScrollView(
         child: new Column(
           children: favoresS.map((f) {
-            return _buildFavorInfo(f);
+            return _buildFavorInfo(f, context);
           }).toList(),
         ),
       ));

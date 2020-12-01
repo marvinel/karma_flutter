@@ -50,7 +50,6 @@ Future<String> addFavor(user_asking, user_toDo, user_askingid, user_toDoid,
     'status': status,
     'delivery': delivery,
   });
-
   return Future.value("OK");
 }
 
@@ -65,6 +64,7 @@ Future<String> listaSeleccionados() async {
     if (value['user_toDoid'] == currentSignedInUser.uid &&
         value['status'] == 'Asignado') {
       fav.add(Favor(
+          key: key,
           user_asking: value['user_asking'],
           user_toDo: value['user_toDo'],
           user_askingid: value['user_askingid'],
@@ -90,6 +90,7 @@ Future<String> listaPedidos() async {
     if (value['user_askingid'] != currentSignedInUser.uid &&
         value['status'] == 'Inicial') {
       fa.add(Favor(
+          key: key,
           user_asking: value['user_asking'],
           user_toDo: value['user_toDo'],
           user_askingid: value['user_askingid'],
@@ -107,6 +108,7 @@ Future<String> listaPedidos() async {
 Future<String> obtenerFavorPedido() async {
   Map<dynamic, dynamic> values;
   favoresP = Favor(
+      key: null,
       user_asking: null,
       user_toDo: null,
       user_askingid: null,
@@ -118,33 +120,54 @@ Future<String> obtenerFavorPedido() async {
   await databaseReference.child('favores').once().then((DataSnapshot snap) {
     values = snap.value;
   });
-  values.forEach((key, value) {
-    if (value['user_askingid'] == currentSignedInUser.uid &&
-        value['status'] == 'Inicial') {
-      favoresP = Favor(
-          user_asking: value['user_asking'],
-          user_toDo: value['user_toDo'],
-          user_askingid: value['user_askingid'],
-          user_toDoid: value['user_toDoid'],
-          type: value['type'],
-          details: value['details'],
-          status: value['status'],
-          delivery: value['delivery']);
-    }
-  });
+  if (values != null) {
+    values.forEach((key, value) {
+      if (value['user_askingid'] == currentSignedInUser.uid &&
+          value['status'] == 'Inicial') {
+        favoresP = Favor(
+            key: key,
+            user_asking: value['user_asking'],
+            user_toDo: value['user_toDo'],
+            user_askingid: value['user_askingid'],
+            user_toDoid: value['user_toDoid'],
+            type: value['type'],
+            details: value['details'],
+            status: value['status'],
+            delivery: value['delivery']);
+      }
+    });
+  }
   return "OK";
 }
 
 Future<String> updateFavor(favor) async {
-  try {} catch (error) {
-    print('ERRORS');
-    print(error.message.toString());
-    print(error.code.toString());
-    throw Exception(error.message.toString());
-  }
   if (favor != null) {
-    databaseReference.child("favores").child(favor.key).set(favor.toJson());
+    databaseReference.child("favores").child(favor.key).set({
+      'user_asking': favor.user_asking,
+      'user_toDo': currentSignedInUser.name,
+      'user_askingid': favor.user_askingid,
+      'user_toDoid': currentSignedInUser.uid,
+      'type': favor.type,
+      'details': favor.details,
+      'status': 'Asignado',
+      'delivery': favor.delivery,
+    });
   }
+  return Future.value("OK");
+}
 
+Future<String> updateFavor2(favor) async {
+  if (favor != null) {
+    databaseReference.child("favores").child(favor.key).set({
+      'user_asking': favor.user_asking,
+      'user_toDo': currentSignedInUser.name,
+      'user_askingid': favor.user_askingid,
+      'user_toDoid': currentSignedInUser.uid,
+      'type': favor.type,
+      'details': favor.details,
+      'status': 'Completado',
+      'delivery': favor.delivery,
+    });
+  }
   return Future.value("OK");
 }

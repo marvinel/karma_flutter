@@ -30,8 +30,9 @@ Future<String> signInWithFirebase(String email, String password) async {
       String email = values['email'];
       String id = values['id'];
       int karma = values['karma'];
+      int favor = values['favor'];
       currentSignedInUser =
-          User(email: email, name: nombre, uid: id, karma: karma);
+          User(email: email, name: nombre, uid: id, karma: karma, favor: favor);
     });
     return Future.value("OK");
   } catch (error) {
@@ -50,13 +51,76 @@ Future<String> cambiarKarma() async {
     'id': currentSignedInUser.uid,
     'nombre': currentSignedInUser.name,
     'email': currentSignedInUser.email,
-    'karma': currentSignedInUser.karma - 2
+    'karma': currentSignedInUser.karma - 2,
+    'favor': currentSignedInUser.favor - 1
   });
   User currentSignedInUse = User(
       email: currentSignedInUser.email,
       name: currentSignedInUser.name,
       uid: currentSignedInUser.uid,
-      karma: currentSignedInUser.karma - 2);
+      karma: currentSignedInUser.karma - 2,
+      favor: currentSignedInUser.favor - 1);
+  currentSignedInUser = currentSignedInUse;
+
+  return Future.value("OK");
+}
+
+Future<String> cambiarKarma2(String asking, String todoit) async {
+  await FirebaseDatabase.instance
+      .reference()
+      .child('users')
+      .child(asking)
+      .once()
+      .then((DataSnapshot snap) {
+    Map<dynamic, dynamic> values = snap.value;
+    String nombre = values['nombre'];
+    String email = values['email'];
+    String id = values['id'];
+    int karma = values['karma'];
+    int favor = values['favor'];
+    currentSignedInUser =
+        User(email: email, name: nombre, uid: id, karma: karma, favor: favor);
+  });
+  await FirebaseDatabase.instance.reference().child("users").child(asking).set({
+    'id': currentSignedInUser.uid,
+    'nombre': currentSignedInUser.name,
+    'email': currentSignedInUser.email,
+    'karma': currentSignedInUser.karma,
+    'favor': currentSignedInUser.favor + 1,
+  });
+
+  await FirebaseDatabase.instance
+      .reference()
+      .child('users')
+      .child(todoit)
+      .once()
+      .then((DataSnapshot snap) {
+    Map<dynamic, dynamic> values = snap.value;
+    String nombre = values['nombre'];
+    String email = values['email'];
+    String id = values['id'];
+    int karma = values['karma'];
+    int favor = values['favor'];
+    currentSignedInUser =
+        User(email: email, name: nombre, uid: id, karma: karma, favor: favor);
+  });
+  await FirebaseDatabase.instance
+      .reference()
+      .child("users")
+      .child(currentSignedInUser.uid)
+      .set({
+    'id': currentSignedInUser.uid,
+    'nombre': currentSignedInUser.name,
+    'email': currentSignedInUser.email,
+    'karma': currentSignedInUser.karma + 2,
+    'favor': currentSignedInUser.favor,
+  });
+  User currentSignedInUse = User(
+      email: currentSignedInUser.email,
+      name: currentSignedInUser.name,
+      uid: currentSignedInUser.uid,
+      karma: currentSignedInUser.karma + 2,
+      favor: currentSignedInUser.favor);
   currentSignedInUser = currentSignedInUse;
 
   return Future.value("OK");
@@ -75,13 +139,15 @@ Future<String> signUpWithFirebase(
     final uid = user.uid;
     print('signUpWithFirebase Ok with uid ' + uid);
 
-    currentSignedInUser = User(email: email, name: name, uid: uid, karma: 2);
+    currentSignedInUser =
+        User(email: email, name: name, uid: uid, karma: 2, favor: 1);
 
     databaseReference.child("users").child(user.uid).set({
       'id': user.uid,
       'nombre': currentSignedInUser.name,
       'email': user.email,
-      'karma': currentSignedInUser.karma
+      'karma': currentSignedInUser.karma,
+      'favor': currentSignedInUser.favor
     });
     return Future.value("OK");
   } catch (error) {

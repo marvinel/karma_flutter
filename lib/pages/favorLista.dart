@@ -6,8 +6,14 @@ import 'package:karma/classes/favor.dart';
 import 'package:karma/backend/firebase_auth.dart';
 import 'package:karma/backend/firebase_real_time.dart';
 
-class FLista extends StatelessWidget {
+class FLista extends StatefulWidget {
   @override
+  _FlistaState createState() => _FlistaState();
+}
+
+class _FlistaState extends State<FLista> {
+  final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -19,7 +25,7 @@ class FLista extends StatelessWidget {
         ),
         body: FutureBuilder(
           future: listaPedidos(),
-          builder: (BuildContext context, AsyncSnapshot some) {
+          builder: (BuildContext contex, AsyncSnapshot some) {
             if (some.hasData) {
               if (favoresL.isEmpty) {
                 return Stack(
@@ -47,7 +53,7 @@ class FLista extends StatelessWidget {
                       children: <Widget>[
                         _buildRadioButtons(),
                         _buildOptions(),
-                        _buildList(),
+                        _buildList(context),
                       ],
                     ),
                   ],
@@ -167,7 +173,7 @@ Widget _buildRadioButtons() {
   );
 }
 
-Widget _buildFavorInfo(Favor f) {
+Widget _buildFavorInfo(Favor f, BuildContext context) {
   return Container(
     width: 370,
     height: 230,
@@ -210,7 +216,14 @@ Widget _buildFavorInfo(Favor f) {
                 style: TextStyle(color: Colors.white),
               ),
               color: Colors.green,
-              onPressed: () {},
+              onPressed: () {
+                Future<String> ff = updateFavor(f);
+                ff.then((val) {
+                  if (val == "OK") {
+                    Navigator.of(context).pushNamed("/Flista");
+                  }
+                });
+              },
             ),
           ),
         ],
@@ -219,14 +232,14 @@ Widget _buildFavorInfo(Favor f) {
   );
 }
 
-Widget _buildList() {
+Widget _buildList(BuildContext context) {
   return new Container(
       width: 370,
       height: 550,
       child: new SingleChildScrollView(
         child: new Column(
           children: favoresL.map((f) {
-            return _buildFavorInfo(f);
+            return _buildFavorInfo(f, context);
           }).toList(),
         ),
       ));

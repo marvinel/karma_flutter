@@ -5,16 +5,18 @@ class User {
   final String name;
   final String uid;
   final int karma;
+  final int favor;
 
   User({
     @required this.email,
     @required this.name,
     @required this.uid,
     @required this.karma,
+    @required this.favor,
   });
 
   Map<String, dynamic> toMap() {
-    return {'email': email, 'name': name, 'karma': karma};
+    return {'email': email, 'name': name, 'karma': karma, 'favor': favor};
   }
 
   factory User.fromMap(String uid, Map<String, dynamic> map) {
@@ -24,6 +26,7 @@ class User {
       email: map['email'],
       name: map['name'],
       karma: map['karma'],
+      favor: map['favor'],
       uid: uid,
     );
   }

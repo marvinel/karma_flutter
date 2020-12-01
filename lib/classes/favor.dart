@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class Favor {
+  final String key;
   // ignore: non_constant_identifier_names
   final String user_asking;
   // ignore: non_constant_identifier_names
@@ -15,6 +16,7 @@ class Favor {
   final String delivery;
 
   Favor({
+    @required this.key,
     // ignore: non_constant_identifier_names
     @required this.user_asking,
     // ignore: non_constant_identifier_names
@@ -31,6 +33,7 @@ class Favor {
 
   Map<String, dynamic> toMap() {
     return {
+      'key': key,
       'user_asking': user_asking,
       'user_toDo': user_toDo,
       'user_askingid': user_askingid,
@@ -46,6 +49,7 @@ class Favor {
     assert(uid != null);
     assert(map != null);
     return Favor(
+        key: map['key'],
         user_asking: map['user_asking'],
         user_toDo: map['user_toDo'],
         user_askingid: map['user_askingid'],
