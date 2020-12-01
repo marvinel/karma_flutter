@@ -9,7 +9,6 @@ import 'package:karma/backend/firebase_real_time.dart';
 class FLista extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int id = 1;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Bienvenidos a los pedidos',
@@ -20,9 +19,9 @@ class FLista extends StatelessWidget {
         ),
         body: FutureBuilder(
           future: listaPedidos(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              if (favoresL != null) {
+          builder: (BuildContext context, AsyncSnapshot some) {
+            if (some.hasData) {
+              if (favoresL.isEmpty) {
                 return Stack(
                   children: <Widget>[
                     Container(decoration: BoxDecoration()),
@@ -179,27 +178,27 @@ Widget _buildFavorInfo(Favor f) {
         children: [
           SizedBox(height: 15),
           Text(
-            f.type,
+            "Tipo Favor: " + f.type,
             style: TextStyle(color: Colors.white, fontSize: 22),
           ),
           SizedBox(height: 10),
           Text(
-            f.status,
+            "Estado: " + f.status,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Text(
-            f.user_asking,
+            "Usuario: " + f.user_asking,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Text(
-            f.details,
+            "Detalles: " + f.details,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Text(
-            f.delivery,
+            "Punto Entrega:" + f.delivery,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
@@ -207,7 +206,7 @@ Widget _buildFavorInfo(Favor f) {
             width: 330,
             child: RaisedButton(
               child: Text(
-                "Chat",
+                "Tomar",
                 style: TextStyle(color: Colors.white),
               ),
               color: Colors.green,

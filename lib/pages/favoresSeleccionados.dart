@@ -3,6 +3,7 @@ import 'package:karma/pages/constants.dart';
 import 'constants.dart';
 import 'package:karma/backend/firebase_auth.dart';
 import 'package:karma/classes/favor.dart';
+import 'package:karma/backend/firebase_real_time.dart';
 
 class Fseleccionados extends StatelessWidget {
   @override
@@ -15,17 +16,46 @@ class Fseleccionados extends StatelessWidget {
           backgroundColor: mainColor,
           title: Text('Pedidos'),
         ),
-        body: Stack(
-          children: <Widget>[
-            Container(decoration: BoxDecoration()),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                _buildOptions(),
-                _buildList(),
-              ],
-            )
-          ],
+        body: FutureBuilder(
+          future: listaSeleccionados(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              if (favoresS.isEmpty) {
+                return Stack(
+                  children: <Widget>[
+                    Container(decoration: BoxDecoration()),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        _buildOptions(),
+                        Container(
+                          child: Text(
+                              'Usted no se encuentra haciendo ningun favor'),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              } else {
+                return Stack(
+                  children: <Widget>[
+                    Container(decoration: BoxDecoration()),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        _buildOptions(),
+                        _buildList(),
+                      ],
+                    ),
+                  ],
+                );
+              }
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
         drawer: Drawer(
           child: ListView(
@@ -87,7 +117,6 @@ Widget _buildOptions() {
   );
 }
 
-// ignore: non_constant_identifier_names
 Widget _buildFavorInfo(Favor f) {
   return Container(
     width: 370,
@@ -99,39 +128,57 @@ Widget _buildFavorInfo(Favor f) {
         children: [
           SizedBox(height: 15),
           Text(
-            f.type,
+            "Tipo Favor: " + f.type,
             style: TextStyle(color: Colors.white, fontSize: 22),
           ),
           SizedBox(height: 10),
           Text(
-            f.status,
+            "Estado: " + f.status,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Text(
-            f.user_asking,
+            "Usuario: " + f.user_asking,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Text(
-            f.details,
+            "Detalles: " + f.details,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Text(
-            f.delivery,
+            "Punto Entrega: " + f.delivery,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Container(
             width: 330,
-            child: RaisedButton(
-              child: Text(
-                "Chat",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Colors.green,
-              onPressed: () {},
+            child: Stack(
+              children: <Widget>[
+                Container(decoration: BoxDecoration()),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    RaisedButton(
+                      child: Text(
+                        "Chat",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: Colors.green,
+                      onPressed: () {},
+                    ),
+                    RaisedButton(
+                      child: Text(
+                        "Terminar",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: Colors.green,
+                      onPressed: () {},
+                    )
+                  ],
+                ),
+              ],
             ),
           ),
         ],
@@ -141,23 +188,14 @@ Widget _buildFavorInfo(Favor f) {
 }
 
 Widget _buildList() {
-  // List<Favor> favores = [
-  //   Favor(
-  //       name: 'Bill Will',
-  //       personAsking: 'Marvin Henriquez',
-  //       details: "Software Developer",
-  //       deliveryPoint: "la casa",
-  //       status: "inicial"),
-  //   Favor(
-  //       name: 'Jhoner Pineda',
-  //       personAsking: 'Marvin',
-  //       details: "Software Developer",
-  //       deliveryPoint: "p7",
-  //       status: "1")
-  // ];
-  // return Column(
-  //   children: favores.map((f) {
-  //     return _buildFavorInfo(f);
-  //   }).toList(),
-  // );
+  return new Container(
+      width: 370,
+      height: 550,
+      child: new SingleChildScrollView(
+        child: new Column(
+          children: favoresS.map((f) {
+            return _buildFavorInfo(f);
+          }).toList(),
+        ),
+      ));
 }

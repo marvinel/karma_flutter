@@ -4,7 +4,6 @@ import 'package:karma/classes/favor.dart';
 
 import '../classes/favor.dart';
 import 'firebase_auth.dart';
-import 'firebase_auth.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -13,6 +12,7 @@ get _getFirebaseChatReference => databaseReference.child("fluttermessages");
 
 Favor favoresP;
 List<Favor> favoresL;
+List<Favor> favoresS;
 
 Future<String> sendChatMsg(String text) async {
   try {
@@ -54,21 +54,17 @@ Future<String> addFavor(user_asking, user_toDo, user_askingid, user_toDoid,
   return Future.value("OK");
 }
 
-Future<String> listaPedidos() async {
-  favoresL.clear();
+Future<String> listaSeleccionados() async {
+  List<Favor> fav = [];
   Map<dynamic, dynamic> values;
-  await FirebaseDatabase.instance
-      .reference()
-      .child('favores')
-      .once()
-      .then((DataSnapshot snap) {
+  await databaseReference.child('favores').once().then((DataSnapshot snap) {
     values = snap.value;
   });
   print(currentSignedInUser.uid);
   values.forEach((key, value) {
-    if (value['user_askingid'] != currentSignedInUser.uid &&
-        value['status'] == 'Inicial') {
-      favoresL.add(Favor(
+    if (value['user_toDoid'] == currentSignedInUser.uid &&
+        value['status'] == 'Asignado') {
+      fav.add(Favor(
           user_asking: value['user_asking'],
           user_toDo: value['user_toDo'],
           user_askingid: value['user_askingid'],
@@ -79,6 +75,33 @@ Future<String> listaPedidos() async {
           delivery: value['delivery']));
     }
   });
+  print("ENTROOOOOO");
+  favoresS = fav;
+  return "OK";
+}
+
+Future<String> listaPedidos() async {
+  List<Favor> fa = [];
+  Map<dynamic, dynamic> values;
+  await databaseReference.child('favores').once().then((DataSnapshot snap) {
+    values = snap.value;
+  });
+  print(currentSignedInUser.uid);
+  values.forEach((key, value) {
+    if (value['user_askingid'] != currentSignedInUser.uid &&
+        value['status'] == 'Inicial') {
+      fa.add(Favor(
+          user_asking: value['user_asking'],
+          user_toDo: value['user_toDo'],
+          user_askingid: value['user_askingid'],
+          user_toDoid: value['user_toDoid'],
+          type: value['type'],
+          details: value['details'],
+          status: value['status'],
+          delivery: value['delivery']));
+    }
+  });
+  favoresL = fa;
   return "OK";
 }
 
@@ -93,11 +116,7 @@ Future<String> obtenerFavorPedido() async {
       details: null,
       status: null,
       delivery: null);
-  await FirebaseDatabase.instance
-      .reference()
-      .child('favores')
-      .once()
-      .then((DataSnapshot snap) {
+  await databaseReference.child('favores').once().then((DataSnapshot snap) {
     values = snap.value;
   });
   values.forEach((key, value) {

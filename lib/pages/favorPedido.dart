@@ -159,27 +159,27 @@ Widget _buildFavorInfo(Favor f) {
         children: [
           SizedBox(height: 15),
           Text(
-            f.type,
+            "Tipo Favor: " + f.type,
             style: TextStyle(color: Colors.white, fontSize: 22),
           ),
           SizedBox(height: 10),
           Text(
-            f.status,
+            "Estado: " + f.status,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Text(
-            f.user_asking,
+            "Realizador: " + f.user_toDo,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Text(
-            f.details,
+            "Detalles: " + f.details,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
           Text(
-            f.delivery,
+            "Punto Entrega: " + f.delivery,
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           SizedBox(height: 10),
