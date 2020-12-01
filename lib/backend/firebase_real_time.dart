@@ -4,6 +4,7 @@ import 'package:karma/classes/favor.dart';
 
 import '../classes/favor.dart';
 import 'firebase_auth.dart';
+import 'firebase_auth.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -11,6 +12,7 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 get _getFirebaseChatReference => databaseReference.child("fluttermessages");
 
 Favor favoresP;
+List<Favor> favoresL;
 
 Future<String> sendChatMsg(String text) async {
   try {
@@ -52,34 +54,67 @@ Future<String> addFavor(user_asking, user_toDo, user_askingid, user_toDoid,
   return Future.value("OK");
 }
 
+Future<String> listaPedidos() async {
+  favoresL.clear();
+  Map<dynamic, dynamic> values;
+  await FirebaseDatabase.instance
+      .reference()
+      .child('favores')
+      .once()
+      .then((DataSnapshot snap) {
+    values = snap.value;
+  });
+  print(currentSignedInUser.uid);
+  values.forEach((key, value) {
+    if (value['user_askingid'] != currentSignedInUser.uid &&
+        value['status'] == 'Inicial') {
+      favoresL.add(Favor(
+          user_asking: value['user_asking'],
+          user_toDo: value['user_toDo'],
+          user_askingid: value['user_askingid'],
+          user_toDoid: value['user_toDoid'],
+          type: value['type'],
+          details: value['details'],
+          status: value['status'],
+          delivery: value['delivery']));
+    }
+  });
+  return "OK";
+}
+
 Future<String> obtenerFavorPedido() async {
-  try {
-    await FirebaseDatabase.instance
-        .reference()
-        .child('favores')
-        .once()
-        .then((DataSnapshot snap) {
-      Map<dynamic, dynamic> values = snap.value;
-      values.forEach((key, value) {
-        if (value['user_askingid'] == currentSignedInUser.uid &&
-            value['status'] == 'Inicial') {
-          favoresP = Favor(
-              user_asking: value['user_asking'],
-              user_toDo: value['user_toDo'],
-              user_askingid: value['user_askingid'],
-              user_toDoid: value['user_toDoid'],
-              type: value['type'],
-              details: value['details'],
-              status: value['status'],
-              delivery: value['delivery']);
-        }
-      });
-    });
-    return Future.value("OK");
-  } catch (error) {
-    print('ERRORS');
-    print(error.toString());
-  }
+  Map<dynamic, dynamic> values;
+  favoresP = Favor(
+      user_asking: null,
+      user_toDo: null,
+      user_askingid: null,
+      user_toDoid: null,
+      type: null,
+      details: null,
+      status: null,
+      delivery: null);
+  await FirebaseDatabase.instance
+      .reference()
+      .child('favores')
+      .once()
+      .then((DataSnapshot snap) {
+    values = snap.value;
+  });
+  values.forEach((key, value) {
+    if (value['user_askingid'] == currentSignedInUser.uid &&
+        value['status'] == 'Inicial') {
+      favoresP = Favor(
+          user_asking: value['user_asking'],
+          user_toDo: value['user_toDo'],
+          user_askingid: value['user_askingid'],
+          user_toDoid: value['user_toDoid'],
+          type: value['type'],
+          details: value['details'],
+          status: value['status'],
+          delivery: value['delivery']);
+    }
+  });
+  return "OK";
 }
 
 Future<String> updateFavor(favor) async {

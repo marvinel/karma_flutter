@@ -19,17 +19,45 @@ class Fpedido extends StatelessWidget {
           backgroundColor: mainColor,
           title: Text('Pedidos'),
         ),
-        body: Stack(
-          children: <Widget>[
-            Container(decoration: BoxDecoration()),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                _buildOptions(),
-                _buildList(),
-              ],
-            ),
-          ],
+        body: FutureBuilder(
+          future: obtenerFavorPedido(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              if (favoresP.type == null) {
+                return Stack(
+                  children: <Widget>[
+                    Container(decoration: BoxDecoration()),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        _buildOptions(),
+                        Container(
+                          child: Text('no ha pedido ningun favor aun'),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              } else {
+                return Stack(
+                  children: <Widget>[
+                    Container(decoration: BoxDecoration()),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        _buildOptions(),
+                        _buildList(),
+                      ],
+                    ),
+                  ],
+                );
+              }
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
         drawer: Drawer(
           child: ListView(
@@ -174,34 +202,26 @@ Widget _buildFavorInfo(Favor f) {
 
 // ignore: missing_return
 Widget _buildList() {
-  Future<String> fa = obtenerFavorPedido();
-  fa.then((val) {
-    if (val == "OK") {
-      List<Favor> favores = [
-        Favor(
-            user_asking: favoresP.user_asking,
-            user_toDo: favoresP.user_toDo,
-            user_askingid: favoresP.user_askingid,
-            user_toDoid: favoresP.user_toDoid,
-            type: favoresP.type,
-            details: favoresP.details,
-            status: favoresP.status,
-            delivery: favoresP.delivery),
-      ];
-      print(favores);
-      return new Container(
-          width: 370,
-          height: 550,
-          child: new SingleChildScrollView(
-            child: new Column(
-              children: favores.map((f) {
-                return _buildFavorInfo(f);
-              }).toList(),
-            ),
-          ));
-    } else {}
-  });
+  List<Favor> favores = [
+    Favor(
+        user_asking: favoresP.user_asking,
+        user_toDo: favoresP.user_toDo,
+        user_askingid: favoresP.user_askingid,
+        user_toDoid: favoresP.user_toDoid,
+        type: favoresP.type,
+        details: favoresP.details,
+        status: favoresP.status,
+        delivery: favoresP.delivery),
+  ];
+  print(favores);
   return new Container(
-    child: new Text('no se ha pedido ningun favor'),
-  );
+      width: 370,
+      height: 550,
+      child: new SingleChildScrollView(
+        child: new Column(
+          children: favores.map((f) {
+            return _buildFavorInfo(f);
+          }).toList(),
+        ),
+      ));
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:karma/classes/favor.dart';
 import 'package:karma/pages/constants.dart';
+import '../backend/firebase_real_time.dart';
 import 'constants.dart';
+import 'package:karma/classes/favor.dart';
 import 'package:karma/backend/firebase_auth.dart';
+import 'package:karma/backend/firebase_real_time.dart';
 
 class FLista extends StatelessWidget {
   @override
@@ -16,18 +18,48 @@ class FLista extends StatelessWidget {
           backgroundColor: mainColor,
           title: Text('Pedidos'),
         ),
-        body: Stack(
-          children: <Widget>[
-            Container(decoration: BoxDecoration()),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                _buildOptions(),
-                _buildRadioButtons(),
-                _buildList(),
-              ],
-            )
-          ],
+        body: FutureBuilder(
+          future: listaPedidos(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              if (favoresL != null) {
+                return Stack(
+                  children: <Widget>[
+                    Container(decoration: BoxDecoration()),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        _buildRadioButtons(),
+                        _buildOptions(),
+                        Container(
+                          child: Text(
+                              'No se encuentra ningun favor para seleccionar'),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              } else {
+                return Stack(
+                  children: <Widget>[
+                    Container(decoration: BoxDecoration()),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        _buildRadioButtons(),
+                        _buildOptions(),
+                        _buildList(),
+                      ],
+                    ),
+                  ],
+                );
+              }
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
         drawer: Drawer(
           child: ListView(
@@ -136,77 +168,67 @@ Widget _buildRadioButtons() {
   );
 }
 
-Widget _buildFavorInfo(Favor) {
+Widget _buildFavorInfo(Favor f) {
   return Container(
     width: 370,
     height: 230,
     child: Card(
       color: Colors.deepPurple[900],
-      child: Container(
-        child: Column(
-          children: [
-            SizedBox(height: 15),
-            Text(
-              Favor.name,
-              style: TextStyle(color: Colors.white, fontSize: 22),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.status,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.personAsking,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.details,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Favor.deliveryPoint,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Container(
-              width: 330,
-              child: RaisedButton(
-                child: Text(
-                  "Hacer Favor",
-                  style: TextStyle(color: Colors.white),
-                ),
-                color: Colors.green,
-                onPressed: () {},
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 15),
+          Text(
+            f.type,
+            style: TextStyle(color: Colors.white, fontSize: 22),
+          ),
+          SizedBox(height: 10),
+          Text(
+            f.status,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Text(
+            f.user_asking,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Text(
+            f.details,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Text(
+            f.delivery,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          Container(
+            width: 330,
+            child: RaisedButton(
+              child: Text(
+                "Chat",
+                style: TextStyle(color: Colors.white),
               ),
-            )
-          ],
-        ),
+              color: Colors.green,
+              onPressed: () {},
+            ),
+          ),
+        ],
       ),
     ),
   );
 }
 
 Widget _buildList() {
-  // List<Favor> favores = [
-  //   Favor(
-  //       name: 'Bill Will',
-  //       personAsking: 'djnhdkidk',
-  //       details: "Software Developer",
-  //       deliveryPoint: "jdkddkl",
-  //       status: "dhsksn"),
-  //   Favor(
-  //       name: 'Jhoner Pineda',
-  //       personAsking: 'Marvin',
-  //       details: "Software Developer",
-  //       deliveryPoint: "p7",
-  //       status: "1")
-  // ];
-  // return Column(
-  //   children: favores.map((f) {
-  //     return _buildFavorInfo(f);
-  //   }).toList(),
-  // );
+  return new Container(
+      width: 370,
+      height: 550,
+      child: new SingleChildScrollView(
+        child: new Column(
+          children: favoresL.map((f) {
+            return _buildFavorInfo(f);
+          }).toList(),
+        ),
+      ));
 }
