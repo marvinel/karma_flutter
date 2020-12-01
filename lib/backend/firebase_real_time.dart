@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
 import 'package:karma/classes/favor.dart';
 
 import '../classes/favor.dart';
@@ -13,6 +14,7 @@ get _getFirebaseChatReference => databaseReference.child("fluttermessages");
 Favor favoresP;
 List<Favor> favoresL;
 List<Favor> favoresS;
+List<Favor> historial;
 
 Future<String> sendChatMsg(String text) async {
   try {
@@ -85,7 +87,6 @@ Future<String> listaPedidos() async {
   await databaseReference.child('favores').once().then((DataSnapshot snap) {
     values = snap.value;
   });
-  print(currentSignedInUser.uid);
   values.forEach((key, value) {
     if (value['user_askingid'] != currentSignedInUser.uid &&
         value['status'] == 'Inicial') {
@@ -102,6 +103,48 @@ Future<String> listaPedidos() async {
     }
   });
   favoresL = fa;
+  return "OK";
+}
+
+Future<String> obtenerHistorial() async {
+  List<Favor> h = [];
+  Map<dynamic, dynamic> values;
+  await databaseReference.child('favores').once().then((DataSnapshot snap) {
+    values = snap.value;
+  });
+  if (values != null) {
+    values.forEach((key, value) {
+      if (value['user_askingid'] == currentSignedInUser.uid ||
+          value['user_toDoid'] == currentSignedInUser.uid) {
+        h.add(Favor(
+            key: key,
+            user_asking: value['user_asking'],
+            user_toDo: value['user_toDo'],
+            user_askingid: value['user_askingid'],
+            user_toDoid: value['user_toDoid'],
+            type: value['type'],
+            details: value['details'],
+            status: value['status'],
+            delivery: value['delivery']));
+      }
+    });
+    List<Favor> h2 = [];
+    if (h.length >= 3) {
+      var i = 1;
+      while (i <= 3) {
+        h2.add(h[h.length - i]);
+        i = i + 1;
+      }
+      historial = h2;
+    } else {
+      var i = 1;
+      while (i <= h.length) {
+        h2.add(h[h.length - i]);
+        i = i + 1;
+      }
+      historial = h2;
+    }
+  }
   return "OK";
 }
 

@@ -215,7 +215,6 @@ Widget _buildList() {
         status: favoresP.status,
         delivery: favoresP.delivery),
   ];
-  print(favores);
   return new Container(
       width: 370,
       height: 550,
