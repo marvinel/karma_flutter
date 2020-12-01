@@ -29,8 +29,9 @@ Future<String> signInWithFirebase(String email, String password) async {
       String nombre = values['nombre'];
       String email = values['email'];
       String id = values['id'];
-      print(nombre);
-      currentSignedInUser = User(email: email, name: nombre, uid: id);
+      int karma = values['karma'];
+      currentSignedInUser =
+          User(email: email, name: nombre, uid: id, karma: karma);
     });
     return Future.value("OK");
   } catch (error) {
@@ -38,6 +39,27 @@ Future<String> signInWithFirebase(String email, String password) async {
     print(error.toString());
     return Future.value(error.toString());
   }
+}
+
+Future<String> cambiarKarma() async {
+  await FirebaseDatabase.instance
+      .reference()
+      .child("users")
+      .child(currentSignedInUser.uid)
+      .set({
+    'id': currentSignedInUser.uid,
+    'nombre': currentSignedInUser.name,
+    'email': currentSignedInUser.email,
+    'karma': currentSignedInUser.karma - 2
+  });
+  User currentSignedInUse = User(
+      email: currentSignedInUser.email,
+      name: currentSignedInUser.name,
+      uid: currentSignedInUser.uid,
+      karma: currentSignedInUser.karma - 2);
+  currentSignedInUser = currentSignedInUse;
+
+  return Future.value("OK");
 }
 
 Future<String> signUpWithFirebase(
@@ -53,12 +75,13 @@ Future<String> signUpWithFirebase(
     final uid = user.uid;
     print('signUpWithFirebase Ok with uid ' + uid);
 
-    currentSignedInUser = User(email: email, name: name, uid: uid);
+    currentSignedInUser = User(email: email, name: name, uid: uid, karma: 2);
 
     databaseReference.child("users").child(user.uid).set({
       'id': user.uid,
       'nombre': currentSignedInUser.name,
-      'email': user.email
+      'email': user.email,
+      'karma': currentSignedInUser.karma
     });
     return Future.value("OK");
   } catch (error) {

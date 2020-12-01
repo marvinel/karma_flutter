@@ -151,7 +151,7 @@ class MapScreenState extends State<Perfil> {
                                 ),
                                 Expanded(
                                   child: new Text(
-                                    '2',
+                                    currentSignedInUser.karma.toString(),
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.normal),

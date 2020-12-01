@@ -112,8 +112,9 @@ class Fpedido extends StatelessWidget {
   }
 
   bool _pedirFavor() {
-    // ignore: todo
-    //TODO Check current user score, if >= 2, return true, else, false
+    if (currentSignedInUser.karma < 2) {
+      return false;
+    }
     return true;
   }
 }

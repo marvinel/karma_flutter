@@ -75,7 +75,6 @@ Future<String> listaSeleccionados() async {
           delivery: value['delivery']));
     }
   });
-  print("ENTROOOOOO");
   favoresS = fav;
   return "OK";
 }

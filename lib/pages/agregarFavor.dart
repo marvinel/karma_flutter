@@ -58,7 +58,13 @@ class _AddFavorState extends State<AgregarFavor> {
                         _description,
                         "Inicial",
                         _location);
-                    Navigator.of(context).pop();
+                    Future<String> f = cambiarKarma();
+                    f.then((val) {
+                      if (val == "OK") {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed("/Fpedidos");
+                      }
+                    });
                   }
                 },
                 child: Container(
