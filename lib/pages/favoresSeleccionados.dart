@@ -161,6 +161,7 @@ Widget _buildFavorInfo(Favor f, BuildContext context) {
               ),
               color: Colors.green,
               onPressed: () {
+                oUserMUserR(f.user_toDoid, f.user_askingid, f.user_asking);
                 Navigator.of(context).pushNamed("/chat");
               },
             ),

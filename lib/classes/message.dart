@@ -1,21 +1,26 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 
-class Message {
-  String key;
-  String text;
-  String user;
+class Messages {
+  final String mensaje;
+  final String user;
+  final String destiny;
 
-  Message(this.text, this.user);
+  Messages({
+    @required this.mensaje,
+    @required this.user,
+    @required this.destiny,
+  });
 
-  Message.fromSnapshot(DataSnapshot snapshot)
-      : key = snapshot.key,
-        text = snapshot.value["text"],
-        user = snapshot.value["user"];
+  Map<String, dynamic> toMap() {
+    return {'mensaje': mensaje, 'user': user, 'destiny': destiny};
+  }
 
-  toJson() {
-    return {
-      "text": text,
-      "user": user,
-    };
+  factory Messages.fromMap(Map<String, dynamic> map) {
+    assert(map != null);
+    return Messages(
+      mensaje: map['mensaje'],
+      user: map['user'],
+      destiny: map['destiny'],
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:karma/config/Assets.dart';
 import 'package:karma/config/Palette.dart';
+import 'package:karma/backend/firebase_auth.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height = 100;
@@ -24,7 +25,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
               )
             ]),
             child: Container(
-                color: Palette.primaryColor,
+                color: Colors.green,
                 child: Row(children: <Widget>[
                   Expanded(
                       //we're dividing the appbar into 7 : 3 ratio. 7 is for content and 3 is for the display picture.
@@ -55,41 +56,12 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                                             MainAxisAlignment.center,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          Text('Aditya Gurjar',
-                                              style: textHeading),
-                                          Text('@adityagurjar',
-                                              style: textStyle)
+                                          Text(su[2], style: textHeading)
                                         ],
                                       ))),
                                 ],
                               )),
                           //second row containing the buttons for media
-                          Container(
-                              height: 23,
-                              padding: EdgeInsets.fromLTRB(20, 5, 5, 0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    'Photos',
-                                    style: textStyle,
-                                  ),
-                                  VerticalDivider(
-                                    width: 30,
-                                    color: Palette.primaryTextColor,
-                                  ),
-                                  Text(
-                                    'Videos',
-                                    style: textStyle,
-                                  ),
-                                  VerticalDivider(
-                                    width: 30,
-                                    color: Palette.primaryTextColor,
-                                  ),
-                                  Text('Files', style: textStyle)
-                                ],
-                              )),
                         ],
                       ))),
                   //This is the display picture

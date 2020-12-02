@@ -7,6 +7,7 @@ final databaseReference = FirebaseDatabase.instance.reference();
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 User currentSignedInUser;
+List<String> su;
 
 Future<String> signInWithFirebase(String email, String password) async {
   try {
@@ -40,6 +41,19 @@ Future<String> signInWithFirebase(String email, String password) async {
     print(error.toString());
     return Future.value(error.toString());
   }
+}
+
+// Future<String> oUserMUserR(String user, String destino) async {
+//   su.add(user);
+//   su.add(destino);
+//   return Future.delayed();
+// }
+void oUserMUserR(String user, String destino, String nombreDes) {
+  List<String> fa = [];
+  fa.add(user);
+  fa.add(destino);
+  fa.add(nombreDes);
+  su = fa;
 }
 
 Future<String> cambiarKarma() async {

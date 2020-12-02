@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:karma/config/Palette.dart';
+import 'package:karma/backend/firebase_auth.dart';
+import 'package:karma/backend/firebase_real_time.dart';
 
 class InputWidget extends StatelessWidget {
   final TextEditingController textEditingController =
@@ -15,7 +17,10 @@ class InputWidget extends StatelessWidget {
               margin: new EdgeInsets.symmetric(horizontal: 1.0),
               child: new IconButton(
                 icon: new Icon(Icons.face),
-                color: Palette.primaryColor,
+                color: Colors.green,
+                onPressed: () {
+                  print("SE PRESIONO ESTOOO");
+                },
               ),
             ),
             color: Colors.white,
@@ -25,12 +30,11 @@ class InputWidget extends StatelessWidget {
           Flexible(
             child: Container(
               child: TextField(
-                style:
-                    TextStyle(color: Palette.primaryTextColor, fontSize: 15.0),
+                style: TextStyle(color: Colors.black, fontSize: 15.0),
                 controller: textEditingController,
                 decoration: InputDecoration.collapsed(
                   hintText: 'Type a message',
-                  hintStyle: TextStyle(color: Palette.greyColor),
+                  hintStyle: TextStyle(color: Colors.black),
                 ),
               ),
             ),
@@ -41,8 +45,16 @@ class InputWidget extends StatelessWidget {
             child: new Container(
               margin: new EdgeInsets.symmetric(horizontal: 8.0),
               child: new IconButton(
-                icon: new Icon(Icons.send),
-                onPressed: () => {},
+                icon: new Icon(
+                  Icons.send,
+                  color: Colors.green,
+                ),
+                onPressed: () {
+                  enviarMensaje(su[0], su[1], textEditingController.text);
+                  textEditingController.text = "";
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushNamed("/chat");
+                },
                 color: Palette.primaryColor,
               ),
             ),

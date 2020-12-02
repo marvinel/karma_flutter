@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:karma/config/Palette.dart';
+import 'package:karma/backend/firebase_auth.dart';
+import 'package:karma/classes/message.dart';
 
 class ChatItemWidget extends StatelessWidget {
-  var index;
-
-  ChatItemWidget(this.index);
+  var id;
+  Messages ad;
+  ChatItemWidget(this.id, this.ad);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    if (index % 2 == 0) {
+    if (id == ad.user) {
       //This is the sent message. We'll later use data from firebase instead of index to determine the message is sent or received.
       return Container(
           child: Column(children: <Widget>[
@@ -17,7 +18,7 @@ class ChatItemWidget extends StatelessWidget {
           children: <Widget>[
             Container(
               child: Text(
-                'This is a sent message',
+                ad.mensaje,
                 style: TextStyle(color: Palette.selfMessageColor),
               ),
               padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
@@ -55,7 +56,7 @@ class ChatItemWidget extends StatelessWidget {
               children: <Widget>[
                 Container(
                   child: Text(
-                    'This is a received message',
+                    ad.mensaje,
                     style: TextStyle(color: Palette.otherMessageColor),
                   ),
                   padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),

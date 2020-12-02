@@ -1,37 +1,50 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:get/get.dart';
 import 'package:karma/classes/favor.dart';
+import 'package:karma/classes/message.dart';
 
 import '../classes/favor.dart';
 import 'firebase_auth.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
-final FirebaseAuth _auth = FirebaseAuth.instance;
-// ignore: unused_element
-get _getFirebaseChatReference => databaseReference.child("fluttermessages");
 
 Favor favoresP;
 List<Favor> favoresL;
 List<Favor> favoresS;
 List<Favor> historial;
+List<Messages> men;
 
-Future<String> sendChatMsg(String text) async {
-  try {
-    var firebaseUser = await _auth.currentUser();
-    final FirebaseUser user = firebaseUser;
-    final uid = user.uid;
-    databaseReference
-        .child("fluttermessages")
-        .push()
-        .set({'text': text, 'user': uid});
-  } catch (error) {
-    print('ERRORS');
-    print(error.message.toString());
-    print(error.code.toString());
-    return Future.error(error.message.toString());
-  }
+Future<String> enviarMensaje(
+    String usuario, String destino, String mensaje) async {
+  await FirebaseDatabase.instance
+      .reference()
+      .child("mensajes")
+      .push()
+      .set({'usuario': usuario, 'mensaje': mensaje, 'destino': destino});
   return Future.value("OK");
+}
+
+Future<String> buscarMensajes(user) async {
+  List<Messages> mensa = [];
+  Map<dynamic, dynamic> values;
+  await databaseReference.child('mensajes').once().then((DataSnapshot snap) {
+    values = snap.value;
+  });
+  if (values != null) {
+    values.forEach((key, value) {
+      if (value['destino'] == user || value['usuario'] == user) {
+        print(value['mensaje']);
+        mensa.add(Messages(
+            user: value['usuario'],
+            mensaje: value['mensaje'],
+            destiny: value['destino']));
+      }
+    });
+  }
+  print(user);
+  men = mensa;
+  print("los mensajes son");
+  print(men);
+  return "OK";
 }
 
 // ignore: non_constant_identifier_names
@@ -41,7 +54,6 @@ Future<String> addFavor(user_asking, user_toDo, user_askingid, user_toDoid,
     print('ERRORS');
     print(error.toString());
   }
-
   databaseReference.child("favores").push().set({
     'user_asking': user_asking,
     'user_toDo': user_toDo,
@@ -61,22 +73,24 @@ Future<String> listaSeleccionados() async {
   await databaseReference.child('favores').once().then((DataSnapshot snap) {
     values = snap.value;
   });
-  print(currentSignedInUser.uid);
-  values.forEach((key, value) {
-    if (value['user_toDoid'] == currentSignedInUser.uid &&
-        value['status'] == 'Asignado') {
-      fav.add(Favor(
-          key: key,
-          user_asking: value['user_asking'],
-          user_toDo: value['user_toDo'],
-          user_askingid: value['user_askingid'],
-          user_toDoid: value['user_toDoid'],
-          type: value['type'],
-          details: value['details'],
-          status: value['status'],
-          delivery: value['delivery']));
-    }
-  });
+  if (values != null) {
+    values.forEach((key, value) {
+      if (value['user_toDoid'] == currentSignedInUser.uid &&
+          value['status'] == 'Asignado') {
+        fav.add(Favor(
+            key: key,
+            user_asking: value['user_asking'],
+            user_toDo: value['user_toDo'],
+            user_askingid: value['user_askingid'],
+            user_toDoid: value['user_toDoid'],
+            type: value['type'],
+            details: value['details'],
+            status: value['status'],
+            delivery: value['delivery']));
+      }
+    });
+  }
+
   favoresS = fav;
   return "OK";
 }
@@ -87,21 +101,24 @@ Future<String> listaPedidos() async {
   await databaseReference.child('favores').once().then((DataSnapshot snap) {
     values = snap.value;
   });
-  values.forEach((key, value) {
-    if (value['user_askingid'] != currentSignedInUser.uid &&
-        value['status'] == 'Inicial') {
-      fa.add(Favor(
-          key: key,
-          user_asking: value['user_asking'],
-          user_toDo: value['user_toDo'],
-          user_askingid: value['user_askingid'],
-          user_toDoid: value['user_toDoid'],
-          type: value['type'],
-          details: value['details'],
-          status: value['status'],
-          delivery: value['delivery']));
-    }
-  });
+  if (values != null) {
+    values.forEach((key, value) {
+      if (value['user_askingid'] != currentSignedInUser.uid &&
+          value['status'] == 'Inicial') {
+        fa.add(Favor(
+            key: key,
+            user_asking: value['user_asking'],
+            user_toDo: value['user_toDo'],
+            user_askingid: value['user_askingid'],
+            user_toDoid: value['user_toDoid'],
+            type: value['type'],
+            details: value['details'],
+            status: value['status'],
+            delivery: value['delivery']));
+      }
+    });
+  }
+
   favoresL = fa;
   return "OK";
 }
@@ -166,7 +183,7 @@ Future<String> obtenerFavorPedido() async {
   if (values != null) {
     values.forEach((key, value) {
       if (value['user_askingid'] == currentSignedInUser.uid &&
-          value['status'] == 'Inicial') {
+          value['status'] != 'Completado') {
         favoresP = Favor(
             key: key,
             user_asking: value['user_asking'],

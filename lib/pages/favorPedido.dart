@@ -21,7 +21,7 @@ class Fpedido extends StatelessWidget {
         ),
         body: FutureBuilder(
           future: obtenerFavorPedido(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
+          builder: (BuildContext contex, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               if (favoresP.type == null) {
                 return Stack(
@@ -46,7 +46,7 @@ class Fpedido extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         _buildOptions(),
-                        _buildList(),
+                        _buildList(context),
                       ],
                     ),
                   ],
@@ -149,7 +149,7 @@ Widget _buildOptions() {
 }
 
 // ignore: unused_element
-Widget _buildFavorInfo(Favor f) {
+Widget _buildFavorInfo(Favor f, BuildContext context) {
   return Container(
     width: 370,
     height: 230,
@@ -192,7 +192,12 @@ Widget _buildFavorInfo(Favor f) {
                 style: TextStyle(color: Colors.white),
               ),
               color: Colors.green,
-              onPressed: () {},
+              onPressed: () {
+                if (f.status != "Inicial") {
+                  oUserMUserR(f.user_askingid, f.user_toDoid, f.user_toDo);
+                  Navigator.of(context).pushNamed("/chat");
+                }
+              },
             ),
           ),
         ],
@@ -202,7 +207,7 @@ Widget _buildFavorInfo(Favor f) {
 }
 
 // ignore: missing_return
-Widget _buildList() {
+Widget _buildList(BuildContext context) {
   List<Favor> favores = [
     Favor(
         key: favoresP.key,
@@ -221,7 +226,7 @@ Widget _buildList() {
       child: new SingleChildScrollView(
         child: new Column(
           children: favores.map((f) {
-            return _buildFavorInfo(f);
+            return _buildFavorInfo(f, context);
           }).toList(),
         ),
       ));
