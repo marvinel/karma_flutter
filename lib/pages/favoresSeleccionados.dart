@@ -160,7 +160,9 @@ Widget _buildFavorInfo(Favor f, BuildContext context) {
                 style: TextStyle(color: Colors.white),
               ),
               color: Colors.green,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed("/chat");
+              },
             ),
           ),
           Container(
